@@ -37,5 +37,5 @@ jobs:
           docker buildx build \
             --push \
             --platform=linux/amd64,linux/arm64 \
-            --tag=$IMAGE_REGISTRY/awx-ee:latest \
+            --tag=ghcr.io/MatthieuCoder/awx-ee-dotenv:latest \
             context
