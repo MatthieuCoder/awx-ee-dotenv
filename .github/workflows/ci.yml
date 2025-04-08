@@ -4,14 +4,14 @@ name: CI
 
 on:
   pull_request:
-    branches: [devel]
+    branches: [devel, devel-phirelink]
 
   push:
-    branches: [devel]
+    branches: [devel, devel-phirelink]
 
 jobs:
   podman:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     name: Podman
     steps:
       - uses: actions/checkout@v2
@@ -26,11 +26,13 @@ jobs:
           pip install tox
 
       - name: Build EE with Podman
+        env:
+          IMAGE_REGISTRY: ${{ vars.IMAGE_REGISTRY }}
         run: |
           tox -e podman
 
   docker:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     name: Docker
     steps:
       - uses: actions/checkout@v2
@@ -47,5 +49,6 @@ jobs:
       - name: Build EE with Docker
         env:
           DOCKER_BUILDKIT: 1
+          IMAGE_REGISTRY: ${{ vars.IMAGE_REGISTRY }}
         run: |
           tox -e docker
