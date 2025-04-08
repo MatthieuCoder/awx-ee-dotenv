@@ -5,13 +5,14 @@ on:
     # build and push anytime commits are merged to devel
     branches:
       - devel
+      - devel-phirelink
   schedule:
-    # build every 12 hours
-    - cron: '0 */12 * * *'
+    # build on Sunday so if something breaks we can fix it Monday
+    - cron: '0 0 * * 0'
 
 jobs:
   build_and_push_latest:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     name: Build and push latest tag from devel and on new commits
     steps:
       - uses: actions/checkout@v2
